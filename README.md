@@ -4,16 +4,19 @@ Swordfish is a POC static contract analysis tool built on Foundry. This implemen
 
 ## Usage
 
-Note: The simulation parameters are only temporary until we figure out how to update storage via cheatcodes.
-
 ```bash
-./validate.sh <contract_address> <simulation_token_id> <simulation_block_number>
+./validate.sh <contract_address> <token_id>
+
+# Arguments
+#   contract_address: The smart contract being validated
+#   token_id: A token id to use as the simulation
+
+# Returns
+#   1: Contract enforces creator fees
+#   0: Contract does not enforce creator fees
 ```
 
-**Returns**
-
-- 1: Contract enforces creator fees
-- 0: Contract does not enforce creator fees
+Note: If we figure out how to cheatcode the ERC721 storage in forge, we can remove the `token_id` requirement.
 
 ## Testing Swordfish
 
