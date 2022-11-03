@@ -27,13 +27,9 @@ contract TestERC721Operators is Test {
     // Token ID to test against
     uint256 tokenId;
 
-    // Owner address to test against
+    // Owner of the NFT
     address owner;
 
-    // Block number to fork
-    uint256 blockNumber;
-
-    // Test valid ERC721 operators
     address[] VALID_OPERATORS = [
         // Seaport
         0x1E0049783F008A0085193E00003D00cd54003c71
@@ -48,13 +44,12 @@ contract TestERC721Operators is Test {
         // Load test data via environment variables
         nftContract = IERC721(vm.envAddress("CONTRACT_ADDRESS"));
         tokenId = vm.envUint("TOKEN_ID");
-        owner = vm.envAddress("OWNER_ADDRESS");
 
         // Fork mainnet
-        vm.createSelectFork(
-            vm.envString("RPC_URL"),
-            vm.envUint("BLOCK_NUMBER")
-        );
+        vm.createSelectFork(vm.envString("ETH_RPC_URL"));
+
+        // Get the current owner of the NFT
+        owner = nftContract.ownerOf(tokenId);
     }
 
     function testValidOperators() public {
