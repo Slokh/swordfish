@@ -2,6 +2,8 @@
 
 Swordfish is a POC static contract analysis tool built on Foundry. This implementation includes analysis of an ERC721 smart contract and whether it blocks transfers by an operator that does not enforce creator fees.
 
+For the POC and quick integration, I'm using a lightweight Go server to run CLI commands and return the validation response.
+
 ## Usage
 
 ```bash
@@ -33,4 +35,25 @@ export ETH_RPC_URL=https://api.mycryptoapi.com/eth
 ./validate.sh 0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d 2368
 # 0
 
+```
+
+## Example Server
+
+```bash
+
+docker build -t swordfish .
+
+docker run -p 9000:5000 swordfish
+```
+
+Valid Request
+
+```
+curl -XPOST "http://localhost:9000/validate" -H "Content-Type: application/json" -d '{"rpcUrl": "https://eth-mainnet.g.alchemy.com/v2/YHk3aDB3DlAIXLX2BXJxMLlZnkY9tQBA", "contractAddress": "0xc73B17179Bf0C59cD5860Bb25247D1D1092c1088", "tokenId": "994"}'
+```
+
+Invalid Request
+
+```
+curl -XPOST "http://localhost:9000/validate" -H "Content-Type: application/json" -d '{"rpcUrl": "https://eth-mainnet.g.alchemy.com/v2/YHk3aDB3DlAIXLX2BXJxMLlZnkY9tQBA", "contractAddress": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d", "tokenId": "2368"}'
 ```
