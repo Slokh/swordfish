@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM golang:latest
 
 COPY . .
 
@@ -6,7 +6,4 @@ COPY . .
 RUN curl -L https://foundry.paradigm.xyz | bash
 RUN ~/.foundry/bin/foundryup
 
-# Install Flask App
-RUN pip3 install -r requirements.txt
-
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+CMD [ "go", "run", "main.go"]
